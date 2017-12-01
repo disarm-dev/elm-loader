@@ -1,7 +1,7 @@
 port module App exposing (..)
 
-import Html exposing (Html, div, text, program, ul, li)
-import Html.Attributes exposing (class)
+import Html exposing (Html, div, text, program, ul, li, a)
+import Html.Attributes exposing (class, href)
 
 -- MODEL
 type alias Model = {
@@ -26,7 +26,9 @@ type Msg
 -- VIEW
 render_list : String -> Html msg
 render_list v = 
-  li [] [text v]
+  li [] [
+    a [href ("/" ++ v)] [text v]
+  ]
 
 
 view : Model -> Html Msg
