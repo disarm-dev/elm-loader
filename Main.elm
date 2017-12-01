@@ -3,8 +3,6 @@ port module App exposing (..)
 import Html exposing (Html, div, text, program, ul, li)
 import Html.Attributes exposing (class)
 
---versions = ["1.0", "2.0", "3.0"]
-
 -- MODEL
 type alias Model = {
     latest : String,
