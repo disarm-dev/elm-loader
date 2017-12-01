@@ -1,24 +1,27 @@
-module App exposing (..)
+port module App exposing (..)
 
 import Html exposing (Html, div, text, program, ul, li)
 import Html.Attributes exposing (class)
 
-versions = ["1.0", "2.0", "3.0"]
+--versions = ["1.0", "2.0", "3.0"]
 
 -- MODEL
-type alias Model =
-    String
+type alias Model = {
+    latest : String,
+    versions: List String
+}
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( "Hello", Cmd.none )
+    ( Model "Latest" [] , Cmd.none )
 
 
 
 -- MESSAGES
 type Msg
     = NoOp
+    | IncomingVersions (List String)
 
 
 
@@ -31,7 +34,7 @@ render_list v =
 view : Model -> Html Msg
 view model =
   ul [class "list"] 
-    (List.map render_list versions)
+    (List.map render_list model.versions)
 
 
 
@@ -41,13 +44,17 @@ update msg model =
     case msg of
         NoOp ->
             ( model, Cmd.none )
+        IncomingVersions versions ->
+            ( Model model.latest versions, Cmd.none)
 
 
 
 -- SUBSCRIPTIONS
+port versions : (List String -> msg) -> Sub msg
+
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none
+    versions IncomingVersions
 
 
 
